@@ -1,0 +1,15 @@
+from rest_framework import serializers
+from .models import ProductOffer,Lead
+
+class ProductOfferSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductOffer
+        fields = "__all__"
+        
+        
+class LeadSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Lead
+        fields = "__all__"
+        
+        
