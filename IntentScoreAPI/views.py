@@ -57,12 +57,12 @@ def upload_leads(request):
             leads.append(lead)
             
             # saving bulk data into db
-            Lead.objects.bulk_create(leads)
+        Lead.objects.bulk_create(leads)
             
-            return Response(
-                {'message':f'Successfully uploaded {len(leads)} leads'},
-                status=status.HTTP_201_CREATED
-            )
+        return Response(
+            {'message':f'Successfully uploaded {len(leads)} leads'},
+            status=status.HTTP_201_CREATED
+        )
             
     except Exception as e:
         return Response(
