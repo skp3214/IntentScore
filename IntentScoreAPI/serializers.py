@@ -12,4 +12,6 @@ class LeadSerializer(serializers.ModelSerializer):
         model = Lead
         fields = "__all__"
         
-        
+class LeadUploadSerializer(serializers.Serializer):
+    csv_file = serializers.FileField()
+    
