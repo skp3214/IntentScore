@@ -137,3 +137,10 @@ def score_leads(request):
             {'error':f'Error scoring leads: {str(e)}'},
             status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
+        
+@api_view(['GET'])
+def get_results(request):
+    
+    leads = Lead.objects.all()
+    serializer = LeadSerializer(leads, many=True)
+    return Response(serializer.data, status=status.HTTP_200_OK)
