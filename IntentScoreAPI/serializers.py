@@ -15,3 +15,12 @@ class LeadSerializer(serializers.ModelSerializer):
 class LeadUploadSerializer(serializers.Serializer):
     csv_file = serializers.FileField()
     
+class ScoringResultSerializer(serializers.Serializer):
+    name = serializers.CharField()
+    role = serializers.CharField()
+    company = serializers.CharField()
+    industry = serializers.CharField()
+    location = serializers.CharField()
+    intent = serializers.CharField()
+    score = serializers.IntegerField()
+    reasoning = serializers.CharField()

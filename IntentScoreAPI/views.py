@@ -1,13 +1,15 @@
 from django.shortcuts import render
 
 # Create your views here.
-
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from .models import Lead
-from .serializers import ProductOfferSerializer,LeadUploadSerializer
+from .models import Lead,ProductOffer
+from .serializers import ProductOfferSerializer,LeadUploadSerializer,LeadSerializer,ScoringResultSerializer
 import pandas as pd
+from .services import LeadScoringService
+
+
 @api_view(['POST'])
 def create_offer(request):
     serializer = ProductOfferSerializer(data = request.data)
@@ -68,4 +70,70 @@ def upload_leads(request):
         return Response(
             {'error':f'Error processing CSV: {str(e)}'},
             status=status.HTTP_400_BAD_REQUEST
+        )
+        
+@api_view(['POST'])
+def score_leads(request):
+    
+    try:
+        offer = ProductOffer.objects.last()
+        if not offer:
+            return Response(
+                {'error':'No product offer found. Please create an offer first.'},
+                status = status.HTTP_400_BAD_REQUEST
+            )
+            
+        # Get all uploaded leads
+        
+        leads = Lead.objects.all()
+        if not leads.exists():
+            return Response(
+                {'error':'No leads found. Please upload leads first.'},
+                status = status.HTTP_400_BAD_REQUEST
+            )
+            
+        scoring_service = LeadScoringService()
+        offer_data = {
+            'name': offer.name,
+            'value_props': offer.value_props,
+            'ideal_use_cases': offer.ideal_use_cases
+        }
+        
+        results = []
+        
+        for lead in leads:
+            lead_data = {
+                'name':lead.name,
+                'role':lead.role,
+                'company':lead.company,
+                'industry':lead.industry,
+                'location':lead.location,
+                'linkedin_bio':lead.linkedin_bio
+            }
+            
+            scoring_result = scoring_service.score_lead(lead_data, offer_data)
+            
+            lead.intent = scoring_result['intent']
+            lead.score = scoring_result['score']
+            lead.reasoning = scoring_result['reasoning']
+            lead.save()
+            
+            results.append({
+                'name':lead.name,
+                'role':lead.role,
+                'company':lead.company,
+                'industry':lead.industry,
+                'location':lead.location,
+                'intent':lead.intent,
+                'score':lead.score,
+                'reasoning':lead.reasoning
+            })
+            
+        serializer = ScoringResultSerializer(results,many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+        
+    except Exception as e:
+        return Response(
+            {'error':f'Error scoring leads: {str(e)}'},
+            status=status.HTTP_500_INTERNAL_SERVER_ERROR
         )
