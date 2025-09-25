@@ -8,6 +8,8 @@ from .models import Lead,ProductOffer
 from .serializers import ProductOfferSerializer,LeadUploadSerializer,LeadSerializer,ScoringResultSerializer
 import pandas as pd
 from .services import LeadScoringService
+from django.http import HttpResponse
+import json
 
 
 @api_view(['POST'])
@@ -144,3 +146,29 @@ def get_results(request):
     leads = Lead.objects.all()
     serializer = LeadSerializer(leads, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+def export_results_csv(request):
+    
+    leads = Lead.objects.all()
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="lead_scores.csv"'
+    
+    df_data = []
+    
+    for lead in leads:
+        df_data.append({
+            'Name':lead.name,
+            'Role':lead.role,
+            'Company':lead.company,
+            'Industry':lead.industry,
+            'Location':lead.location,
+            'Intent':lead.intent,
+            'Score':lead.score,
+            'Reasoning':lead.reasoning
+        })
+        
+    df = pd.DataFrame(df_data)
+    df.to_csv(response,index=False)
+    
+    return response
