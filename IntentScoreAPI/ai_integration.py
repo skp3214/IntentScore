@@ -11,7 +11,7 @@ class GeminiAIService:
             raise ValueError("GEMINI_API_KEY environment variable is required")
         
         genai.configure(api_key=api_key)
-        self.model = genai.GenerativeModel('gemini-1.5-flash')
+        self.model = genai.GenerativeModel('gemini-2.0-flash')
     
     def analyze_lead_intent(self, lead_data, offer_data):
         
