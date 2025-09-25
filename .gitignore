@@ -1,0 +1,42 @@
+# Django
+*.pyc
+__pycache__/
+db.sqlite3
+media/
+staticfiles/
+*.log
+*.pot
+*.mo
+
+# Django migrations
+*/migrations/
+!*/migrations/__init__.py
+
+# Environment
+.env
+*.env
+
+# Python
+*.pyo
+*.pyd
+venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Misc
+*.bak
+*.tmp
+*.swp
+*.lock
