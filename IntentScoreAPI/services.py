@@ -1,9 +1,9 @@
 import pandas as pd
-from .ai_integration import GeminiAIService
+from .ai_integration import GeminiAIService, TransformersIntentService
 
 class LeadScoringService:
     def __init__(self):
-        self.ai_service = GeminiAIService()
+        self.ai_service = TransformersIntentService()
         self.decision_maker_roles = [
             'ceo', 'cfo', 'cto', 'cmo', 'coo', 'president', 'vp', 'vice president',
             'director', 'head of', 'manager', 'founder', 'owner'
