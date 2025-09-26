@@ -30,37 +30,6 @@ A sophisticated **Lead Intent Scoring System** that leverages AI to analyze cust
 
 ## 📋 API Endpoints
 
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| `POST` | `product/offer/` | Create a new product offer |
-| `POST` | `leads/upload/` | Upload leads via CSV file |
-| `POST` | `score/` | Score leads against product offers |
-| `GET` | `results/` | Get scoring results |
-| `GET` | `csv/` | Export results to CSV |
-
-## 🏗️ Project Structure
-
-```
-IntentScore/
-├── IntentScore/                 # Main Django project
-│   ├── settings.py             # Django settings
-│   ├── urls.py                 # URL routing
-│   └── wsgi.py                 # WSGI application
-├── IntentScoreAPI/             # Main API application
-│   ├── models.py               # Data models (Lead, ProductOffer)
-│   ├── views.py                # API endpoints
-│   ├── serializers.py          # Data serializers
-│   ├── services.py             # Business logic
-│   ├── ai_integration.py       # AI/ML integration
-│   └── urls.py                 # API routing
-├── requirements.txt            # Python dependencies
-├── Dockerfile                  # Docker configuration
-├── compose.yaml               # Docker Compose
-└── manage.py                  # Django management
-```
-
-## 📋 API Endpoints
-
 | Method | Endpoint | Description | Status |
 |--------|----------|-------------|--------|
 | `POST` | `product/offer/` | Create a new product offer | ✅ |
