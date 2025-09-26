@@ -12,6 +12,21 @@ from django.http import HttpResponse
 import json
 
 
+@api_view(['GET'])
+def index(request):
+    return Response({
+        "message": "Welcome to IntentScoreAPI",
+        "description": "A sophisticated Lead Intent Scoring System powered by AI",
+        "version": "1.0.0",
+        "endpoints": {
+            "POST /product/offer/": "Create a new product offer",
+            "POST /leads/upload/": "Upload leads via CSV file", 
+            "POST /score/": "Score leads against product offers",
+            "GET /results/": "Get all leads with their scores",
+            "GET /csv/": "Export results to CSV"
+        }
+    }, status=status.HTTP_200_OK)
+
 @api_view(['POST'])
 def create_offer(request):
     serializer = ProductOfferSerializer(data = request.data)
