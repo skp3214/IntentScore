@@ -14,18 +14,58 @@ import json
 
 @api_view(['GET'])
 def index(request):
-    return Response({
-        "message": "Welcome to IntentScoreAPI",
-        "description": "A sophisticated Lead Intent Scoring System powered by AI",
-        "version": "1.0.0",
-        "endpoints": {
-            "POST /product/offer/": "Create a new product offer",
-            "POST /leads/upload/": "Upload leads via CSV file", 
-            "POST /score/": "Score leads against product offers",
-            "GET /results/": "Get all leads with their scores",
-            "GET /csv/": "Export results to CSV"
-        }
-    }, status=status.HTTP_200_OK)
+    html_content = """
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <title>IntentScore API</title>
+        <style>
+            body { font-family: Arial, sans-serif; margin: 40px; }
+            h1 { color: #333; }
+            h2 { color: #666; margin-top: 30px; }
+            .endpoint { margin: 10px 0; padding: 10px; background: #f5f5f5; border-radius: 5px; }
+            .method { font-weight: bold; color: #007bff; }
+            .path { font-family: monospace; }
+        </style>
+    </head>
+    <body>
+        <h1>🎯 IntentScore API</h1>
+        <p>A sophisticated Lead Intent Scoring System powered by AI</p>
+        <p><strong>Version:</strong> 1.0.0</p>
+        
+        <h2>Available Endpoints:</h2>
+        
+        <div class="endpoint">
+            <span class="method">POST</span> <span class="path">/product/offer/</span>
+            <br>Create a new product offer
+        </div>
+        
+        <div class="endpoint">
+            <span class="method">POST</span> <span class="path">/leads/upload/</span>
+            <br>Upload leads via CSV file
+        </div>
+        
+        <div class="endpoint">
+            <span class="method">POST</span> <span class="path">/score/</span>
+            <br>Score leads against product offers
+        </div>
+        
+        <div class="endpoint">
+            <span class="method">GET</span> <span class="path">/results/</span>
+            <br>Get all leads with their scores
+        </div>
+        
+        <div class="endpoint">
+            <span class="method">GET</span> <span class="path">/csv/</span>
+            <br>Export results to CSV
+        </div>
+        
+        <hr>
+        <p><em>Built with Django REST Framework</em></p>
+    </body>
+    </html>
+    """
+    return HttpResponse(html_content, content_type='text/html')
 
 @api_view(['POST'])
 def create_offer(request):
