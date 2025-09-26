@@ -29,7 +29,7 @@ def index(request):
         </style>
     </head>
     <body>
-        <h1>🎯 IntentScore API</h1>
+        <h1>IntentScore API</h1>
         <p>A sophisticated Lead Intent Scoring System powered by AI</p>
         <p><strong>Version:</strong> 1.0.0</p>
         
